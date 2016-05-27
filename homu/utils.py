@@ -99,3 +99,16 @@ def retry_until(inner, fail, state):
         traceback.print_exception(*exc_info)
 
         fail(err)
+
+
+def strip_pr_body(pr_body):
+    """
+    Strip noisy parts of the Servo PR template from merge commits.
+    """
+    # Strip most of the template and Reviewable
+    pr_footer = '\n---\n<!-- Thank you for contributing to Servo! '
+    stripped_body = pr_body.partition(pr_footer)[0]
+
+    # May or may not exist; may be at the top or bottom of stripped_body
+    pr_header = '<!-- Please describe your changes on the following line: -->'
+    return stripped_body.replace(pr_header, '').strip()

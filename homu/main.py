@@ -450,7 +450,7 @@ def create_merge(state, repo_cfg, branch, git_cfg):
         state.head_ref,
         '<try>' if state.try_ else state.approved_by,
         state.title,
-        state.body,
+        utils.strip_pr_body(state.body),
     )
 
     desc = 'Merge conflict'
